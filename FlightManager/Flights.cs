@@ -12,9 +12,9 @@ using System.Data.OleDb;
 
 namespace FlightManager
 {
-    public partial class flights : Form
+    public partial class Flights : Form
     {
-        public flights()
+        public Flights()
         {
             InitializeComponent();
         }
@@ -43,6 +43,69 @@ namespace FlightManager
             }
 
                 return dtFlights;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            string connString = ConfigurationManager.ConnectionStrings["dbx"].ConnectionString;
+
+            using (OleDbConnection con = new OleDbConnection(connString))
+            {
+                con.Open();
+
+                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Flights where FlightNo like '" + textBoxSearchByFlightNo.Text + "%'", con);
+
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+
+                dataGridView1.DataSource = dt;
+
+                con.Close();
+              
+            }
+        }
+
+        private void textBoxSearchByDeparture_TextChanged(object sender, EventArgs e)
+        {
+            string connString = ConfigurationManager.ConnectionStrings["dbx"].ConnectionString;
+
+            using (OleDbConnection con = new OleDbConnection(connString))
+            {
+                con.Open();
+
+                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Flights where Departure like '" + textBoxSearchByDeparture.Text + "%'", con);
+
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+
+                dataGridView1.DataSource = dt;
+
+                con.Close();
+
+            }
+        }
+
+        private void textBoxSearchByDestination_TextChanged(object sender, EventArgs e)
+        {
+            string connString = ConfigurationManager.ConnectionStrings["dbx"].ConnectionString;
+
+            using (OleDbConnection con = new OleDbConnection(connString))
+            {
+                con.Open();
+
+                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Flights where Destination like '" + textBoxSearchByDestination.Text + "%'", con);
+
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+
+                dataGridView1.DataSource = dt;
+
+                con.Close();
+
+            }
         }
     } 
 }
