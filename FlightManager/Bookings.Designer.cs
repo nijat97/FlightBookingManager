@@ -31,6 +31,8 @@
             this.dataGridViewBookings = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonNewBooking = new System.Windows.Forms.Button();
+            this.buttonEdit = new System.Windows.Forms.Button();
+            this.buttonDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBookings)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,7 +47,7 @@
             this.dataGridViewBookings.Name = "dataGridViewBookings";
             this.dataGridViewBookings.ReadOnly = true;
             this.dataGridViewBookings.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewBookings.Size = new System.Drawing.Size(713, 286);
+            this.dataGridViewBookings.Size = new System.Drawing.Size(798, 356);
             this.dataGridViewBookings.TabIndex = 0;
             // 
             // label1
@@ -59,21 +61,47 @@
             // 
             // buttonNewBooking
             // 
-            this.buttonNewBooking.Location = new System.Drawing.Point(662, 351);
+            this.buttonNewBooking.Location = new System.Drawing.Point(581, 409);
             this.buttonNewBooking.Name = "buttonNewBooking";
             this.buttonNewBooking.Size = new System.Drawing.Size(95, 23);
             this.buttonNewBooking.TabIndex = 2;
             this.buttonNewBooking.Text = "New Booking";
             this.buttonNewBooking.UseVisualStyleBackColor = true;
+            this.buttonNewBooking.Click += new System.EventHandler(this.buttonNewBooking_Click);
+            // 
+            // buttonEdit
+            // 
+            this.buttonEdit.Location = new System.Drawing.Point(682, 409);
+            this.buttonEdit.Name = "buttonEdit";
+            this.buttonEdit.Size = new System.Drawing.Size(75, 23);
+            this.buttonEdit.TabIndex = 3;
+            this.buttonEdit.Text = "Edit";
+            this.buttonEdit.UseVisualStyleBackColor = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
+            // 
+            // buttonDelete
+            // 
+            this.buttonDelete.ForeColor = System.Drawing.Color.Maroon;
+            this.buttonDelete.Location = new System.Drawing.Point(767, 409);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(75, 23);
+            this.buttonDelete.TabIndex = 4;
+            this.buttonDelete.Text = "Delete";
+            this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // Bookings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(887, 461);
+            this.Controls.Add(this.buttonDelete);
+            this.Controls.Add(this.buttonEdit);
             this.Controls.Add(this.buttonNewBooking);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridViewBookings);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "Bookings";
             this.Text = "Bookings";
             this.Load += new System.EventHandler(this.Bookings_Load);
@@ -88,5 +116,7 @@
         private System.Windows.Forms.DataGridView dataGridViewBookings;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonNewBooking;
+        private System.Windows.Forms.Button buttonEdit;
+        private System.Windows.Forms.Button buttonDelete;
     }
 }

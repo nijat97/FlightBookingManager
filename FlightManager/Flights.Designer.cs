@@ -30,7 +30,7 @@
         private void InitializeComponent()
         {
             this.flightAdd = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewFlights = new System.Windows.Forms.DataGridView();
             this.labelSearch = new System.Windows.Forms.Label();
             this.textBoxSearchByFlightNo = new System.Windows.Forms.TextBox();
             this.labelSearchByDeparture = new System.Windows.Forms.Label();
@@ -40,7 +40,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFlights)).BeginInit();
             this.SuspendLayout();
             // 
             // flightAdd
@@ -51,20 +51,21 @@
             this.flightAdd.TabIndex = 0;
             this.flightAdd.Text = "Book Flight";
             this.flightAdd.UseVisualStyleBackColor = true;
+            this.flightAdd.Click += new System.EventHandler(this.flightAdd_Click);
             // 
-            // dataGridView1
+            // dataGridViewFlights
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(36, 42);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(848, 391);
-            this.dataGridView1.TabIndex = 1;
+            this.dataGridViewFlights.AllowUserToAddRows = false;
+            this.dataGridViewFlights.AllowUserToDeleteRows = false;
+            this.dataGridViewFlights.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewFlights.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewFlights.Location = new System.Drawing.Point(36, 42);
+            this.dataGridViewFlights.MultiSelect = false;
+            this.dataGridViewFlights.Name = "dataGridViewFlights";
+            this.dataGridViewFlights.ReadOnly = true;
+            this.dataGridViewFlights.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewFlights.Size = new System.Drawing.Size(848, 391);
+            this.dataGridViewFlights.TabIndex = 1;
             // 
             // labelSearch
             // 
@@ -122,9 +123,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(470, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 13);
+            this.label1.Size = new System.Drawing.Size(71, 13);
             this.label1.TabIndex = 8;
-            this.label1.Text = "Available flights:";
+            this.label1.Text = "Choose flight:";
             // 
             // label2
             // 
@@ -159,18 +160,19 @@
             this.Controls.Add(this.textBoxSearchByFlightNo);
             this.Controls.Add(this.labelSearch);
             this.Controls.Add(this.flightAdd);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dataGridViewFlights);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Flights";
             this.Text = "Flights";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFlights)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridViewFlights;
         private System.Windows.Forms.Button flightAdd;
         private System.Windows.Forms.Label labelSearch;
         private System.Windows.Forms.TextBox textBoxSearchByFlightNo;

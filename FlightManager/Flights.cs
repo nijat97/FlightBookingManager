@@ -14,6 +14,11 @@ namespace FlightManager
 {
     public partial class Flights : Form
     {
+        public static string flightnumber = "";
+        public static string depart_city = "";
+        public static string dest_city = "";
+        public static string pass_name = "";
+        public static string pass_surname = "";
         public Flights()
         {
             InitializeComponent();
@@ -21,7 +26,7 @@ namespace FlightManager
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = GetFlightsList();
+            dataGridViewFlights.DataSource = GetFlightsList();
         }
 
         private DataTable GetFlightsList()
@@ -45,7 +50,7 @@ namespace FlightManager
                 return dtFlights;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void searchAndUpdate(string column, string textbox)
         {
             string connString = ConfigurationManager.ConnectionStrings["dbx"].ConnectionString;
 
@@ -53,59 +58,48 @@ namespace FlightManager
             {
                 con.Open();
 
-                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Flights where FlightNo like '" + textBoxSearchByFlightNo.Text + "%'", con);
+                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Flights where " + column + " like '" + textbox + "%'", con);
 
                 DataTable dt = new DataTable();
 
                 da.Fill(dt);
 
-                dataGridView1.DataSource = dt;
+                dataGridViewFlights.DataSource = dt;
 
                 con.Close();
-              
+
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            searchAndUpdate("FlightNo", textBoxSearchByFlightNo.Text);
         }
 
         private void textBoxSearchByDeparture_TextChanged(object sender, EventArgs e)
         {
-            string connString = ConfigurationManager.ConnectionStrings["dbx"].ConnectionString;
-
-            using (OleDbConnection con = new OleDbConnection(connString))
-            {
-                con.Open();
-
-                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Flights where Departure like '" + textBoxSearchByDeparture.Text + "%'", con);
-
-                DataTable dt = new DataTable();
-
-                da.Fill(dt);
-
-                dataGridView1.DataSource = dt;
-
-                con.Close();
-
-            }
+            searchAndUpdate("Departure", textBoxSearchByDeparture.Text);
         }
 
         private void textBoxSearchByDestination_TextChanged(object sender, EventArgs e)
         {
-            string connString = ConfigurationManager.ConnectionStrings["dbx"].ConnectionString;
+            searchAndUpdate("Destination", textBoxSearchByDestination.Text);
+        }
 
-            using (OleDbConnection con = new OleDbConnection(connString))
+        private void flightAdd_Click(object sender, EventArgs e)
+        {
+            NewBooking new_b = new NewBooking();
+
+            if (dataGridViewFlights.SelectedRows.Count > 0)
             {
-                con.Open();
-
-                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Flights where Destination like '" + textBoxSearchByDestination.Text + "%'", con);
-
-                DataTable dt = new DataTable();
-
-                da.Fill(dt);
-
-                dataGridView1.DataSource = dt;
-
-                con.Close();
-
+                int selectedrowindex = dataGridViewFlights.SelectedCells[0].RowIndex;
+                DataGridViewRow selectedRow = dataGridViewFlights.Rows[selectedrowindex];
+                flightnumber = Convert.ToString(selectedRow.Cells["FlightNo"].Value);
+                depart_city = Convert.ToString(selectedRow.Cells["Departure"].Value);
+                dest_city = Convert.ToString(selectedRow.Cells["Destination"].Value);
             }
+            new_b.ShowDialog();
+            this.Close();
         }
     } 
 }

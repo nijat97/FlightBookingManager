@@ -14,6 +14,8 @@ namespace FlightManager
 {
     public partial class Bookings : Form
     {
+        public static string passengerName = "";
+
         public Bookings()
         {
             InitializeComponent();
@@ -43,6 +45,61 @@ namespace FlightManager
             }
 
             return dtBookings;
+        }
+
+        private void buttonNewBooking_Click(object sender, EventArgs e)
+        {
+            Flights new_flights = new Flights();
+            new_flights.ShowDialog();
+            dataGridViewBookings.DataSource = GetBookingData();
+        }
+
+        private void buttonEdit_Click(object sender, EventArgs e)
+        {
+            NewBooking newBook = new NewBooking();
+
+            if (dataGridViewBookings.SelectedRows.Count > 0)
+            {
+                int selectedrowindex = dataGridViewBookings.SelectedCells[0].RowIndex;
+                DataGridViewRow selectedRow = dataGridViewBookings.Rows[selectedrowindex];
+                passengerName = Convert.ToString(selectedRow.Cells["PassengerName"].Value);
+            }
+            newBook.ShowDialog();
+            dataGridViewBookings.DataSource = GetBookingData();
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            DataTable dtBookings = new DataTable();
+            
+            string connString = ConfigurationManager.ConnectionStrings["dbx"].ConnectionString;
+
+            if (dataGridViewBookings.SelectedRows.Count > 0)
+            {
+                int selectedrowindex = dataGridViewBookings.SelectedCells[0].RowIndex;
+                DataGridViewRow selectedRow = dataGridViewBookings.Rows[selectedrowindex];
+                string selectedNo = Convert.ToString(selectedRow.Cells["BookingNo"].Value);
+
+
+                using (OleDbConnection con = new OleDbConnection(connString))
+                {
+                    using (OleDbCommand cmd = new OleDbCommand(
+                        "DELETE FROM Bookings WHERE BookingNo =" + selectedNo , con))
+                    {
+                        con.Open();
+
+                        cmd.ExecuteNonQuery();
+
+                        con.Close();
+                    }
+                }
+                dataGridViewBookings.DataSource = GetBookingData();
+            }
+            else
+            {
+                MessageBox.Show("No data to delete!");
+            }
+
         }
     }
 }
