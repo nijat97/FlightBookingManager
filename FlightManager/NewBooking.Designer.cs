@@ -49,6 +49,7 @@
             this.checkBoxLunch = new System.Windows.Forms.CheckBox();
             this.labelPrice = new System.Windows.Forms.Label();
             this.labelInfo = new System.Windows.Forms.Label();
+            this.buttonRemoveLuggage = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -83,9 +84,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(27, 172);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(85, 13);
+            this.label4.Size = new System.Drawing.Size(146, 13);
             this.label4.TabIndex = 3;
-            this.label4.Text = "Luggage (20kg):";
+            this.label4.Text = "Luggage (max 3, each 20kg):";
             // 
             // label5
             // 
@@ -148,7 +149,7 @@
             // labelLuggage
             // 
             this.labelLuggage.AutoSize = true;
-            this.labelLuggage.Location = new System.Drawing.Point(114, 172);
+            this.labelLuggage.Location = new System.Drawing.Point(172, 172);
             this.labelLuggage.Name = "labelLuggage";
             this.labelLuggage.Size = new System.Drawing.Size(13, 13);
             this.labelLuggage.TabIndex = 11;
@@ -156,7 +157,7 @@
             // 
             // buttonAddLuggage
             // 
-            this.buttonAddLuggage.Location = new System.Drawing.Point(137, 167);
+            this.buttonAddLuggage.Location = new System.Drawing.Point(191, 167);
             this.buttonAddLuggage.Name = "buttonAddLuggage";
             this.buttonAddLuggage.Size = new System.Drawing.Size(75, 23);
             this.buttonAddLuggage.TabIndex = 12;
@@ -208,6 +209,7 @@
             this.checkBoxEntertainment.Size = new System.Drawing.Size(15, 14);
             this.checkBoxEntertainment.TabIndex = 17;
             this.checkBoxEntertainment.UseVisualStyleBackColor = true;
+      
             // 
             // checkBoxLunch
             // 
@@ -237,11 +239,22 @@
             this.labelInfo.Size = new System.Drawing.Size(0, 13);
             this.labelInfo.TabIndex = 20;
             // 
+            // buttonRemoveLuggage
+            // 
+            this.buttonRemoveLuggage.Location = new System.Drawing.Point(272, 167);
+            this.buttonRemoveLuggage.Name = "buttonRemoveLuggage";
+            this.buttonRemoveLuggage.Size = new System.Drawing.Size(75, 23);
+            this.buttonRemoveLuggage.TabIndex = 21;
+            this.buttonRemoveLuggage.Text = "Remove";
+            this.buttonRemoveLuggage.UseVisualStyleBackColor = true;
+            this.buttonRemoveLuggage.Click += new System.EventHandler(this.buttonRemoveLuggage_Click);
+            // 
             // NewBooking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(426, 396);
+            this.Controls.Add(this.buttonRemoveLuggage);
             this.Controls.Add(this.labelInfo);
             this.Controls.Add(this.labelPrice);
             this.Controls.Add(this.checkBoxLunch);
@@ -295,5 +308,6 @@
         private System.Windows.Forms.CheckBox checkBoxLunch;
         private System.Windows.Forms.Label labelPrice;
         private System.Windows.Forms.Label labelInfo;
+        private System.Windows.Forms.Button buttonRemoveLuggage;
     }
 }

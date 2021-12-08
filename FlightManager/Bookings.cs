@@ -14,7 +14,7 @@ namespace FlightManager
 {
     public partial class Bookings : Form
     {
-        public static string passengerName = "";
+        public static int bookNo = 0;
 
         public Bookings()
         {
@@ -62,10 +62,11 @@ namespace FlightManager
             {
                 int selectedrowindex = dataGridViewBookings.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = dataGridViewBookings.Rows[selectedrowindex];
-                passengerName = Convert.ToString(selectedRow.Cells["PassengerName"].Value);
+                bookNo = Convert.ToInt32(selectedRow.Cells["BookingNo"].Value);
+                newBook.ShowDialog(this);
+                dataGridViewBookings.DataSource = GetBookingData();
             }
-            newBook.ShowDialog();
-            dataGridViewBookings.DataSource = GetBookingData();
+
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -94,10 +95,6 @@ namespace FlightManager
                     }
                 }
                 dataGridViewBookings.DataSource = GetBookingData();
-            }
-            else
-            {
-                MessageBox.Show("No data to delete!");
             }
 
         }

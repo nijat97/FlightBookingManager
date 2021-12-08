@@ -15,8 +15,8 @@ namespace FlightManager
     public partial class Flights : Form
     {
         public static string flightnumber = "";
-        public static string depart_city = "";
-        public static string dest_city = "";
+        //public static string depart_city = "";
+        //public static string dest_city = "";
         public static string pass_name = "";
         public static string pass_surname = "";
         public Flights()
@@ -95,10 +95,10 @@ namespace FlightManager
                 int selectedrowindex = dataGridViewFlights.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = dataGridViewFlights.Rows[selectedrowindex];
                 flightnumber = Convert.ToString(selectedRow.Cells["FlightNo"].Value);
-                depart_city = Convert.ToString(selectedRow.Cells["Departure"].Value);
-                dest_city = Convert.ToString(selectedRow.Cells["Destination"].Value);
+                //depart_city = Convert.ToString(selectedRow.Cells["Departure"].Value);
+                //dest_city = Convert.ToString(selectedRow.Cells["Destination"].Value);
             }
-            new_b.ShowDialog();
+            new_b.ShowDialog(this);
             this.Close();
         }
     } 
