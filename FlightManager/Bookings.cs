@@ -19,11 +19,15 @@ namespace FlightManager
         public Bookings()
         {
             InitializeComponent();
+            
         }
 
         private void Bookings_Load(object sender, EventArgs e)
         {
             dataGridViewBookings.DataSource = GetBookingData();
+            AppDomain.CurrentDomain.SetData("DataDirectory","DB/");
+            this.TopMost =  true;
+            this.TopMost = false;
         }
 
         private DataTable GetBookingData()
@@ -80,12 +84,22 @@ namespace FlightManager
                 int selectedrowindex = dataGridViewBookings.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = dataGridViewBookings.Rows[selectedrowindex];
                 string selectedNo = Convert.ToString(selectedRow.Cells["BookingNo"].Value);
-
+                string flight = Convert.ToString(selectedRow.Cells["FlightNo"].Value);
 
                 using (OleDbConnection con = new OleDbConnection(connString))
                 {
                     using (OleDbCommand cmd = new OleDbCommand(
                         "DELETE FROM Bookings WHERE BookingNo =" + selectedNo , con))
+                    {
+                        con.Open();
+
+                        cmd.ExecuteNonQuery();
+
+                        con.Close();
+                    }
+
+                    using (OleDbCommand cmd = new OleDbCommand(
+                       "UPDATE Flights SET AvailableSeats = AvailableSeats + 1 WHERE FlightNo='" + flight + "'", con))
                     {
                         con.Open();
 

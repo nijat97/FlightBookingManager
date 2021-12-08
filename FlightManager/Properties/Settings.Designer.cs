@@ -26,10 +26,10 @@ namespace FlightManager.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\\Flights1.accdb")]
-        public string Flights1ConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\\Flights.accdb")]
+        public string FlightsConnectionString {
             get {
-                return ((string)(this["Flights1ConnectionString"]));
+                return ((string)(this["FlightsConnectionString"]));
             }
         }
     }

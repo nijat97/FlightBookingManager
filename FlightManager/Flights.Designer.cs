@@ -162,9 +162,10 @@
             this.Controls.Add(this.flightAdd);
             this.Controls.Add(this.dataGridViewFlights);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Flights";
             this.Text = "Flights";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.Flights_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFlights)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

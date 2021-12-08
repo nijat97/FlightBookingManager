@@ -15,8 +15,6 @@ namespace FlightManager
     public partial class Flights : Form
     {
         public static string flightnumber = "";
-        //public static string depart_city = "";
-        //public static string dest_city = "";
         public static string pass_name = "";
         public static string pass_surname = "";
         public Flights()
@@ -24,7 +22,7 @@ namespace FlightManager
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Flights_Load(object sender, EventArgs e)
         {
             dataGridViewFlights.DataSource = GetFlightsList();
         }
@@ -58,7 +56,7 @@ namespace FlightManager
             {
                 con.Open();
 
-                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Flights where " + column + " like '" + textbox + "%'", con);
+                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Flights where " + column + " like '%" + textbox + "%'", con);
 
                 DataTable dt = new DataTable();
 
@@ -95,8 +93,6 @@ namespace FlightManager
                 int selectedrowindex = dataGridViewFlights.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = dataGridViewFlights.Rows[selectedrowindex];
                 flightnumber = Convert.ToString(selectedRow.Cells["FlightNo"].Value);
-                //depart_city = Convert.ToString(selectedRow.Cells["Departure"].Value);
-                //dest_city = Convert.ToString(selectedRow.Cells["Destination"].Value);
             }
             new_b.ShowDialog(this);
             this.Close();

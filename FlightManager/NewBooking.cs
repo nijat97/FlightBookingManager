@@ -21,15 +21,11 @@ namespace FlightManager
         private string dest = "";
         private int price_standard = 0;
         private int price_business = 0;
+        private int additional_price = 0;
+        private int final_cost = 0;
         public NewBooking()
         {
             InitializeComponent();
-            checkBoxStudent.CheckedChanged += myEventHandler;
-            checkBoxBusiness.CheckedChanged += myEventHandler;
-            checkBoxEntertainment.CheckedChanged += myEventHandler;
-            checkBoxLunch.CheckedChanged += myEventHandler;
-            buttonAddLuggage.Click += myEventHandler;
-            buttonRemoveLuggage.Click += myEventHandler;
         }
 
         private void buttonBook_Click(object sender, EventArgs e)
@@ -51,10 +47,20 @@ namespace FlightManager
                 {
                     using (OleDbCommand cmd = new OleDbCommand(
                         "INSERT INTO Bookings " +
-                        "(BookingNo, FlightNo, PassengerName, PassengerSurname, PassportNo, Luggage, Business, Student, InFlightEntertainment, LunchMenu)" +
+                        "(BookingNo, FlightNo, PassengerName, PassengerSurname, PassportNo, Luggage, Business, Student, InFlightEntertainment, LunchMenu, Cost)" +
                         " VALUES (" + ID + ",'" + Flights.flightnumber + "', '" + textBoxName.Text + "', '" + textBoxSurname.Text +
                         "', '" + textBoxPassport.Text + "', " + luggage + ", " + checkBoxBusiness.Checked + ", "
-                        + checkBoxStudent.Checked + ", " + checkBoxEntertainment.Checked + ", " + checkBoxLunch.Checked + ")", con))
+                        + checkBoxStudent.Checked + ", " + checkBoxEntertainment.Checked + ", " + checkBoxLunch.Checked + ", " + final_cost + ")", con))
+                    {
+                        con.Open();
+
+                        cmd.ExecuteNonQuery();
+
+                        con.Close();
+                    }
+
+                    using (OleDbCommand cmd = new OleDbCommand(
+                        "UPDATE Flights SET AvailableSeats = AvailableSeats - 1 WHERE FlightNo='" + flightNo + "'", con))
                     {
                         con.Open();
 
@@ -70,7 +76,7 @@ namespace FlightManager
                         " PassengerName='" + textBoxName.Text + "', PassengerSurname='" + textBoxSurname.Text +
                         "', PassportNo='" + textBoxPassport.Text + "', Luggage=" + luggage + ", Business=" + checkBoxBusiness.Checked +
                         ", Student=" + checkBoxStudent.Checked + ", InFlightEntertainment=" + checkBoxEntertainment.Checked +
-                        ", LunchMenu=" + checkBoxLunch.Checked + " WHERE BookingNo=" + ID , con))
+                        ", LunchMenu=" + checkBoxLunch.Checked + ", Cost= " + final_cost + " WHERE BookingNo=" + ID , con))
                     {
                         con.Open();
 
@@ -91,7 +97,7 @@ namespace FlightManager
             {
                 con.Open();
 
-                if(this.Owner is Flights)
+                if (this.Owner is Flights)
                 {
                     using (OleDbCommand cmd = new OleDbCommand("SELECT Max(BookingNo) FROM Bookings", con))
                     {
@@ -106,7 +112,7 @@ namespace FlightManager
 
                     }
 
-                    using (OleDbCommand cmd = new OleDbCommand("SELECT Departure, Destination, StandardPrice, BusinessClassPrice FROM Flights WHERE FlightNo='" + Flights.flightnumber +"'", con))
+                    using (OleDbCommand cmd = new OleDbCommand("SELECT Departure, Destination, StandardPrice, BusinessClassPrice FROM Flights WHERE FlightNo='" + Flights.flightnumber + "'", con))
                     {
 
                         OleDbDataReader reader = cmd.ExecuteReader();
@@ -127,11 +133,12 @@ namespace FlightManager
                     labelPrice.Text = price_standard.ToString();
 
                 }
-                else if(this.Owner is Bookings)
+                else if (this.Owner is Bookings)
                 {
+
                     buttonBook.Text = "Confirm";
                     using (OleDbCommand cmd = new OleDbCommand("SELECT BookingNo, FlightNo, PassengerName, PassengerSurname, PassportNo, Luggage, Business," +
-                    " Student, InFlightEntertainment, LunchMenu FROM Bookings WHERE BookingNo=" + Bookings.bookNo, con))
+                    " Student, InFlightEntertainment, LunchMenu, Cost FROM Bookings WHERE BookingNo=" + Bookings.bookNo, con))
                     {
                         OleDbDataReader reader = cmd.ExecuteReader();
 
@@ -150,12 +157,12 @@ namespace FlightManager
                             checkBoxStudent.Checked = reader.GetBoolean(7);
                             checkBoxEntertainment.Checked = reader.GetBoolean(8);
                             checkBoxLunch.Checked = reader.GetBoolean(9);
-
+                            final_cost = reader.GetInt32(10);
 
                         }
                     }
 
-                    using (OleDbCommand cmd = new OleDbCommand("SELECT Departure, Destination, Standard Price, Business Class Price FROM Flights WHERE FlightNo= '" + flightNo + "'" , con))
+                    using (OleDbCommand cmd = new OleDbCommand("SELECT Departure, Destination, StandardPrice, BusinessClassPrice FROM Flights WHERE FlightNo= '" + flightNo + "'", con))
                     {
                         OleDbDataReader reader = cmd.ExecuteReader();
 
@@ -170,7 +177,9 @@ namespace FlightManager
 
                     labelInfo.Text = "BookingNo: " + ID + "   Selected flight No: " + flightNo +
                     "     From: " + depart + " To: " + dest;
-                    labelPrice.Text = price_standard.ToString();
+
+                    if (checkBoxBusiness.Checked) { additional_price = final_cost - price_business; } else { additional_price = final_cost - price_standard; }
+                    labelPrice.Text = final_cost.ToString();
 
                 }
                 
@@ -179,50 +188,19 @@ namespace FlightManager
 
         }
 
-        private void myEventHandler(object sender, EventArgs e)
+        private void calculateAndShow()
         {
             if (checkBoxBusiness.Checked)
             {
-                labelPrice.Text = calculatePrice(price_business).ToString();
+                final_cost = price_business + additional_price;
+                labelPrice.Text = final_cost.ToString();
             }
             else
             {
-                labelPrice.Text = calculatePrice(price_standard).ToString();
+                final_cost = price_standard + additional_price;
+                labelPrice.Text = final_cost.ToString();
             }
-        }
-
-        private double calculatePrice(double price)
-        {
-            price += luggage * 20;
-
-            if (checkBoxEntertainment.Checked)
-            {
-                price += 10;
-            }
-            else
-            {
-                price -= 10;
-            }
-
-            if (checkBoxLunch.Checked)
-            {
-                price += 15;
-            }
-            else
-            {
-                price -= 15;
-            }
-
-            if (checkBoxStudent.Checked)
-            {
-                price = price - price * 0.2;
-            }
-            else
-            {
-                price = price / 0.8;
-            }
-
-            return price;
+            
         }
 
         private void buttonAddLuggage_Click(object sender, EventArgs e)
@@ -231,6 +209,8 @@ namespace FlightManager
             {
                 luggage++;
                 labelLuggage.Text = luggage.ToString();
+                additional_price += 20;
+                calculateAndShow();
             }
         }
 
@@ -240,6 +220,62 @@ namespace FlightManager
             {
                 luggage--;
                 labelLuggage.Text = luggage.ToString();
+                additional_price -= 20;
+                calculateAndShow();
+            }
+        }
+
+        private void checkBoxBusiness_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxBusiness.Checked)
+            {
+                calculateAndShow();
+            }
+            else
+            {
+                calculateAndShow();
+            }
+        }
+
+        private void checkBoxStudent_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxStudent.Checked)
+            {
+                additional_price -= 15;
+                calculateAndShow();
+            }
+            else
+            {
+                additional_price += 15;
+                calculateAndShow();
+            }
+        }
+
+        private void checkBoxEntertainment_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxEntertainment.Checked)
+            {
+                additional_price += 10;
+                calculateAndShow();
+            }
+            else
+            {
+                additional_price -= 10;
+                calculateAndShow();
+            }
+        }
+
+        private void checkBoxLunch_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxLunch.Checked)
+            {
+                additional_price += 5;
+                calculateAndShow();
+            }
+            else
+            {
+                additional_price -= 5;
+                calculateAndShow();
             }
         }
     }

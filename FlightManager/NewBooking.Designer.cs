@@ -173,6 +173,7 @@
             this.checkBoxBusiness.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBusiness.TabIndex = 13;
             this.checkBoxBusiness.UseVisualStyleBackColor = true;
+            this.checkBoxBusiness.CheckedChanged += new System.EventHandler(this.checkBoxBusiness_CheckedChanged);
             // 
             // checkBoxStudent
             // 
@@ -182,6 +183,7 @@
             this.checkBoxStudent.Size = new System.Drawing.Size(15, 14);
             this.checkBoxStudent.TabIndex = 14;
             this.checkBoxStudent.UseVisualStyleBackColor = true;
+            this.checkBoxStudent.CheckedChanged += new System.EventHandler(this.checkBoxStudent_CheckedChanged);
             // 
             // label9
             // 
@@ -209,7 +211,7 @@
             this.checkBoxEntertainment.Size = new System.Drawing.Size(15, 14);
             this.checkBoxEntertainment.TabIndex = 17;
             this.checkBoxEntertainment.UseVisualStyleBackColor = true;
-      
+            this.checkBoxEntertainment.CheckedChanged += new System.EventHandler(this.checkBoxEntertainment_CheckedChanged);
             // 
             // checkBoxLunch
             // 
@@ -219,6 +221,7 @@
             this.checkBoxLunch.Size = new System.Drawing.Size(15, 14);
             this.checkBoxLunch.TabIndex = 18;
             this.checkBoxLunch.UseVisualStyleBackColor = true;
+            this.checkBoxLunch.CheckedChanged += new System.EventHandler(this.checkBoxLunch_CheckedChanged);
             // 
             // labelPrice
             // 
@@ -277,6 +280,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "NewBooking";
             this.Text = "NewBooking";
             this.Load += new System.EventHandler(this.NewBooking_Load);
