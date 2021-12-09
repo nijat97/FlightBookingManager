@@ -15,8 +15,6 @@ namespace FlightManager
     public partial class Flights : Form
     {
         public static string flightnumber = "";
-        public static string pass_name = "";
-        public static string pass_surname = "";
         public Flights()
         {
             InitializeComponent();
